@@ -1,6 +1,7 @@
 {
   "name": "astro",
   "version": "0.1.0",
+  "icon": ".claude-plugin/icon.png",
   "description": "Esteira de desenvolvimento com IA para o Claude Code: contrato de trabalho, gate de segurança, planejamento, execução, commit, PR e entrega. Núcleo genérico com camada Laravel opcional.",
   "author": {
     "name": "Vitor Bellini"
