@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/icon.svg" alt="astro" width="112">
+</p>
+
 # astro
 
 Plugin de desenvolvimento com IA para o Claude Code. É uma esteira que vai do
