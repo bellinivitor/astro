@@ -127,7 +127,9 @@ As barreiras do Passo 2 são **prompt**; o **gate** as transforma em **guarda de
 código**, barrando a execução de qualquer comando que contenha texto proibido
 (`migrate:fresh`, `rm -rf`, `git push --force`, `truncate`…). As regras do gate são
 editáveis por uma mini-app em `ai-gate/` (SQLite + UI web, só stdlib). Instale no
-projeto — **crie o que não existir; não sobrescreva o que já existe sem avisar**:
+projeto — **crie o que não existir; não sobrescreva o que já existe sem avisar**.
+O setup é **idempotente**: rodar de novo (projeto já configurado, ou outra máquina
+de dev) **não recria nem duplica nada** — cada item abaixo **checa antes de agir**:
 
 > **Local fixo — não pergunte "onde".** O gate vai **sempre** na raiz do projeto:
 > `ai-gate/`, o script em `.claude/hooks/astro_gate.py`, o hook no
@@ -139,18 +141,23 @@ projeto — **crie o que não existir; não sobrescreva o que já existe sem avi
 - **Mini-app:** se não houver `ai-gate/` na raiz do projeto, copie a pasta
   `ai-gate/` (`app.py` + `gate_template.py`) **desta mesma pasta da skill** para a
   raiz do projeto.
-- **DB + gate:** rode `python3 ai-gate/app.py --generate`. Isso cria o
-  `ai-gate/rules.db` (semeado com as barreiras padrão) e gera
-  `.claude/hooks/astro_gate.py` a partir dele. O **SQLite é a fonte da verdade**; o
-  script é artefato **gerado** (não edite à mão).
-- **Gitignore:** adicione `ai-gate/rules.db` ao `.gitignore` do projeto — o DB é
-  local/editável; o que vai versionado é o gate gerado
-  (`.claude/hooks/astro_gate.py`). Crie o `.gitignore` se não existir; não duplique
-  a linha.
+- **DB + gate:** **só se `.claude/hooks/astro_gate.py` ainda não existir**, rode
+  `python3 ai-gate/app.py --generate` — ele semeia o `ai-gate/rules.db` com as
+  barreiras padrão e gera o gate. **Se o gate já existir, NÃO regenere**: regenerar
+  a partir de um `rules.db` default sobrescreveria regras já customizadas (risco
+  real numa 2ª máquina, onde o `rules.db` pode não ter vindo). O `--generate`
+  mantém um `rules.db` que já exista (não re-semeia). Para mudar regras depois, use
+  `astro:gate`. O **SQLite é a fonte**; o script é **gerado** (não edite à mão).
+- **Versione a fonte:** commite o `ai-gate/rules.db` **e** o
+  `.claude/hooks/astro_gate.py` junto do projeto — as regras são a **fonte** e o
+  gate é o artefato gerado; versionando os dois, qualquer máquina ou colega
+  reproduz o **mesmo** gate. **Não** coloque o `rules.db` no `.gitignore`.
 - **Hook:** garanta no `.claude/settings.json` do projeto um `PreToolUse` com
-  matcher `Bash` apontando para o gate. Crie o arquivo se não existir; se existir,
-  faça **merge** preservando o resto e só adicione o hook se ele ainda não estiver
-  lá:
+  matcher `Bash` apontando para o gate. **Antes de adicionar, verifique** se já
+  existe um `PreToolUse` (matcher `Bash`) chamando `astro_gate.py`; se já houver,
+  **não adicione outro** (senão o gate roda duas vezes). Crie o arquivo se não
+  existir; se existir, faça **merge** preservando o resto e só adicione a entrada
+  quando ela ainda não estiver lá:
 
   ```json
   {
