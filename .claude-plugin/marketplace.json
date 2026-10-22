@@ -1,13 +1,20 @@
 {
   "name": "astro",
+  "description": "Esteira de desenvolvimento com IA para o Claude Code: do contrato ao PR, com gate de segurança.",
   "owner": {
     "name": "Vitor Bellini"
   },
   "plugins": [
     {
       "name": "astro",
+      "displayName": "Astro",
       "source": "./astro",
-      "description": "Esteira de desenvolvimento com IA: setup → planejar → task → commit → pr. Núcleo genérico + camada Laravel/Boost."
+      "description": "Esteira de desenvolvimento com IA para o Claude Code: contrato de trabalho, gate de segurança, planejamento, execução, commit, PR e entrega. Núcleo genérico com camada Laravel opcional.",
+      "category": "development",
+      "author": {
+        "name": "Vitor Bellini"
+      },
+      "homepage": "https://github.com/bellinivitor/astro"
     }
   ]
 }
