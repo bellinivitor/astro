@@ -1,0 +1,8 @@
+{
+  "name": "astro",
+  "version": "0.1.0",
+  "description": "Esteira de desenvolvimento com IA para projetos de código: contrato de trabalho (setup), planejamento em tasks, execução, commit e PR. Núcleo genérico com camada Laravel/Boost opcional.",
+  "author": {
+    "name": "Vitor Bellini"
+  }
+}

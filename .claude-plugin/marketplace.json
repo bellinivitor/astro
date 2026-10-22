@@ -1,0 +1,13 @@
+{
+  "name": "astro",
+  "owner": {
+    "name": "Vitor Bellini"
+  },
+  "plugins": [
+    {
+      "name": "astro",
+      "source": "./astro",
+      "description": "Esteira de desenvolvimento com IA: setup → planejar → task → commit → pr. Núcleo genérico + camada Laravel/Boost."
+    }
+  ]
+}

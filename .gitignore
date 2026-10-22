@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+
+# ai-gate: o banco de regras é gerado por projeto no setup — nunca versionar aqui
+**/rules.db
